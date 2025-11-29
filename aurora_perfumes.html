@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aurora Perfumes — Luxury Fragrances</title>
+  <meta name="description" content="Aurora Perfumes — hand-picked luxury fragrances, gifts and sets. Fast shipping and sample kits available." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#b76e79; /* rose-gold */
+      --muted:#9aa1a6;
+      --bg:#0b0f13;
+      --card:#071018;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#04050a 0%, #071018 100%);
+      color:#eef3f6;
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
+      line-height:1.45;
+    }
+    .container{max-width:1100px;margin:0 auto}
+
+    header{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#ffd6e0,#b76e79);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;color:#111}
+    h1.site-title{font-family:'Playfair Display',serif;margin:0;font-size:18px}
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-size:15px}
+    nav a.cta{background:var(--accent);color:#081017;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:28px}
+    .hero-left h2{font-family:'Playfair Display',serif;font-size:40px;margin:0}
+    .hero-left p{color:var(--muted);margin-top:12px}
+    .shop-cta{margin-top:18px;display:flex;gap:12px}
+
+    .search-card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .search-row{display:flex;gap:8px}
+    input.search{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    button.search-btn{background:var(--accent);color:#081017;padding:10px 12px;border-radius:8px;border:none}
+
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:26px}
+    .product{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .product img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .product h3{margin:10px 0 6px 0;font-size:16px}
+    .price{font-weight:700}
+    .tag{display:inline-block;background:rgba(183,110,121,0.12);color:var(--accent);padding:6px 8px;border-radius:999px;font-size:13px;margin-top:8px}
+    .product .actions{display:flex;gap:8px;margin-top:12px}
+    .btn{padding:10px;border-radius:8px;border:none;cursor:pointer}
+    .btn.add{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
+    .btn.buy{background:var(--accent);color:#081017}
+
+    .filters{display:flex;gap:10px;flex-wrap:wrap}
+    .filter-pill{background:var(--glass);padding:8px 10px;border-radius:999px;font-size:13px;cursor:pointer}
+
+    .footer{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center}
+    .small{color:var(--muted);font-size:14px}
+
+    .cart-btn{position:fixed;right:24px;bottom:24px;background:var(--accent);border-radius:999px;padding:12px 16px;color:#081017;font-weight:700;border:none;box-shadow:0 10px 30px rgba(183,110,121,0.18);cursor:pointer}
+
+    /* cart drawer */
+    .drawer{position:fixed;right:0;top:0;height:100vh;width:360px;background:#071018;padding:18px;border-left:1px solid rgba(255,255,255,0.03);transform:translateX(100%);transition:transform .22s;display:flex;flex-direction:column;gap:10px}
+    .drawer.open{transform:translateX(0)}
+    .cart-item{display:flex;gap:8px;align-items:center}
+    .cart-item img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+    .qty{display:flex;gap:6px;align-items:center}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .hero-left h2{font-size:28px}
+      .hero{gap:14px}
+      .drawer{width:94%}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">AP</div>
+        <div>
+          <h1 class="site-title">Aurora Perfumes</h1>
+          <div style="color:var(--muted);font-size:13px">Luxury fragrances • Samples & Gift Sets</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#collections">Collections</a>
+        <a href="#bestsellers">Bestsellers</a>
+        <a href="#about">About</a>
+        <a class="cta" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-left">
+          <h2>Find your signature scent</h2>
+          <p>Carefully curated perfumes from indie artisans and luxury houses. Explore unisex, floral, woody and limited-edition blends.</p>
+          <div class="shop-cta">
+            <a href="#products" class="cta" style="text-decoration:none">Shop Now</a>
+            <a href="#samples" style="color:var(--muted);align-self:center;text-decoration:none">Try Sample Kits</a>
+          </div>
+
+          <div style="margin-top:18px" class="search-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;color:var(--muted)">Quick find</div>
+            <div class="search-row">
+              <input class="search" id="searchInput" placeholder="Search by name or note (e.g. jasmine, oud, citrus)" />
+              <button class="search-btn" onclick="filterProducts()">Search</button>
+            </div>
+            <div style="margin-top:10px" class="filters">
+              <div class="filter-pill" onclick="applyFilter('Floral')">Floral</div>
+              <div class="filter-pill" onclick="applyFilter('Woody')">Woody</div>
+              <div class="filter-pill" onclick="applyFilter('Unisex')">Unisex</div>
+              <div class="filter-pill" onclick="applyFilter('Limited')">Limited</div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div style="background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)">
+            <h3 style="margin:0">Featured — Midnight Rose</h3>
+            <p style="color:var(--muted);margin-top:8px">A decadent floral with blackcurrant and warm amber. 50ml • Limited stock.</p>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button class="btn buy" onclick="openModal(0)">View</button>
+              <button class="btn add" onclick="addToCart(0)">Add to cart</button>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;background:var(--glass);padding:12px;border-radius:10px">
+            <div style="font-weight:700">Gift sets</div>
+            <div style="color:var(--muted);margin-top:8px">Curated sets for birthdays and anniversaries. Ready-to-gift packaging available.</div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="products">
+        <h2 style="margin-top:26px">Our Picks</h2>
+        <div class="products" id="productGrid">
+          <!-- products inserted by JS -->
+        </div>
+      </section>
+
+      <section id="about" style="margin-top:32px">
+        <div style="background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
+          <h3>About Aurora</h3>
+          <p style="color:var(--muted)">Aurora Perfumes began as a small atelier crafting bespoke scents. We partner with artisans to bring unique, long-lasting fragrances. Free shipping over $60 and easy returns within 14 days.</p>
+        </div>
+      </section>
+
+      <section id="contact" style="margin-top:24px">
+        <h3>Contact & Newsletter</h3>
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:14px;margin-top:12px">
+          <form onsubmit="subscribe(event)" style="background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
+            <div style="margin-bottom:8px"><label style="font-size:14px">Email</label><input id="email" type="email" required style="margin-top:6px" placeholder="you@example.com" /></div>
+            <div style="margin-bottom:8px"><label style="font-size:14px">Message (optional)</label><textarea id="message" rows="4" style="margin-top:6px" placeholder="Questions about scents or gifting"></textarea></div>
+            <button class="btn buy" type="submit">Subscribe</button>
+          </form>
+
+          <div style="background:var(--glass);padding:12px;border-radius:10px;color:var(--muted)">
+            <div style="font-weight:700">Store Info</div>
+            <div style="margin-top:8px">Mon–Sat: 10:00–18:00</div>
+            <div style="margin-top:6px">Email: hello@auroraperfumes.example</div>
+            <div style="margin-top:6px">Shipping worldwide • Gift wrapping available</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="small">© Aurora Perfumes — Crafted with care</div>
+      <div class="small">Payments: Visa • Mastercard • PayPal</div>
+    </footer>
+  </div>
+
+  <!-- cart button & drawer -->
+  <button class="cart-btn" id="openCartBtn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Your Cart</h3><button onclick="toggleCart()" class="btn add">Close</button></div>
+    <div id="cartItems" style="overflow:auto;flex:1;margin-top:8px"></div>
+    <div style="border-top:1px solid rgba(255,255,255,0.03);padding-top:10px">
+      <div style="display:flex;justify-content:space-between"><div style="color:var(--muted)">Subtotal</div><div id="cartSubtotal">$0.00</div></div>
+      <div style="margin-top:10px;display:flex;gap:8px"><button class="btn buy" onclick="beginCheckout()">Checkout</button><button class="btn add" onclick="clearCart()">Clear</button></div>
+    </div>
+  </aside>
+
+  <!-- modal template for products & checkout -->
+  <div id="productModal" class="modal" aria-hidden="true" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);visibility:hidden;opacity:0;transition:all .18s">
+    <div class="modal-card" style="background:#08121a;padding:18px;border-radius:12px;max-width:720px;width:94%">
+      <button class="close-x" onclick="closeModal()">✕</button>
+      <div class="modal-grid" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // ====== PRODUCT STORAGE (local) or Firebase (optional) ======
+    // The code below supports two product sources:
+    // 1) Local `products` array (default)
+    // 2) Firestore collection named 'products' if firebase is initialized
+
+    // Sample local products (used if Firebase config not provided)
+    const localProducts = [
+      {id:0,title:'Midnight Rose',note:'Blackcurrant • Rose • Amber',price:49.00,tag:'Floral',img:'https://images.unsplash.com/photo-1542293787938-c9e299b88035?auto=format&fit=crop&w=800&q=60',desc:'A decadent floral with a deep fruity opening and warm amber base.'},
+      {id:1,title:'Cedar & Smoke',note:'Cedar • Vetiver • Smoke',price:59.00,tag:'Woody',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=60',desc:'Earthy woody scent with a refined smoky trail.'},
+      {id:2,title:'Citrus Dawn',note:'Bergamot • Lemon • Musk',price:29.50,tag:'Unisex',img:'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=800&q=60',desc:'Bright and energetic — perfect for daytime.'},
+      {id:3,title:'Amber No.9',note:'Amber • Vanilla • Labdanum',price:72.00,tag:'Limited',img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=60',desc:'Opulent amber with gourmand undertones — small-batch release.'},
+      {id:4,title:'Iris & Oud',note:'Iris • Oud • Leather',price:85.00,tag:'Woody',img:'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=60',desc:'A sophisticated unisex blend with powdery iris and resinous oud.'}
+    ];
+
+    // Firebase: optional. If you want to use Firestore, uncomment and paste your Firebase config below
+    /*
+    // 1) Add these scripts to the <head> if using Firebase (uncomment):
+    // <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    // <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    // 2) Paste your Firebase config here and uncomment init code
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    */
+
+    // Product source variable — will point to either localProducts or fetched Firestore docs
+    let products = []; // filled on load
+
+    async function loadProducts(){
+      // If Firestore `db` is present, try fetching from 'products' collection
+      if(typeof db !== 'undefined'){
+        try{
+          const snapshot = await db.collection('products').get();
+          products = snapshot.docs.map(d => Object.assign({id: d.id}, d.data()));
+          console.log('Loaded products from Firestore', products);
+        }catch(err){
+          console.warn('Failed to fetch from Firestore, falling back to local products', err);
+          products = localProducts;
+        }
+      }else{
+        products = localProducts;
+      }
+      renderProducts(products);
+    }
+
+    // ====== CART (localStorage-backed) ======
+    const CART_KEY = 'aurora_cart_v1';
+    function getCart(){
+      try{ return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); }catch(e){ return []; }
+    }
+    function saveCart(cart){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateCartUI(); }
+
+    function addToCart(id, qty=1){
+      const cart = getCart();
+      const item = cart.find(i=>i.id===id);
+      if(item) item.qty += qty; else cart.push({id,qty});
+      saveCart(cart);
+      alert('Added to cart');
+    }
+
+    function clearCart(){ if(confirm('Clear your cart?')){ saveCart([]); } }
+
+    function updateQty(id, delta){
+      const cart = getCart();
+      const item = cart.find(i=>i.id===id);
+      if(!item) return;
+      item.qty += delta;
+      if(item.qty <= 0) {
+        const idx = cart.findIndex(i=>i.id===id); cart.splice(idx,1);
+      }
+      saveCart(cart);
+    }
+
+    function removeFromCart(id){
+      let cart = getCart(); cart = cart.filter(i=>i.id!==id); saveCart(cart);
+    }
+
+    function updateCartUI(){
+      const cart = getCart();
+      const count = cart.reduce((s,i)=>s+i.qty,0);
+      document.getElementById('cartCount').innerText = count;
+      renderCartItems();
+    }
+
+    function renderCartItems(){
+      const holder = document.getElementById('cartItems');
+      const cart = getCart();
+      if(!holder) return;
+      if(cart.length===0){ holder.innerHTML = '<div style="color:var(--muted)">Your cart is empty.</div>'; document.getElementById('cartSubtotal').innerText = '$0.00'; return; }
+      holder.innerHTML = '';
+      let subtotal = 0;
+      cart.forEach(ci => {
+        const p = products.find(x=>Number(x.id)===Number(ci.id) || String(x.id)===String(ci.id));
+        if(!p) return;
+        subtotal += p.price * ci.qty;
+        const el = document.createElement('div'); el.className = 'cart-item';
+        el.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <div style="flex:1">
+            <div style="font-weight:700">${p.title}</div>
+            <div style="color:var(--muted);font-size:13px">${p.note}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-weight:700">$${(p.price*ci.qty).toFixed(2)}</div>
+              <div class="qty">
+                <button class="btn add" onclick="updateQty('${ci.id}',-1)">-</button>
+                <div style="padding:6px 10px;border-radius:6px;background:rgba(255,255,255,0.02)">${ci.qty}</div>
+                <button class="btn add" onclick="updateQty('${ci.id}',1)">+</button>
+                <button class="btn add" style="margin-left:8px" onclick="removeFromCart('${ci.id}')">Remove</button>
+              </div>
+            </div>
+          </div>
+        `;
+        holder.appendChild(el);
+      });
+      document.getElementById('cartSubtotal').innerText = '$' + subtotal.toFixed(2);
+    }
+
+    function toggleCart(){
+      const d = document.getElementById('cartDrawer');
+      d.classList.toggle('open');
+      d.setAttribute('aria-hidden', !d.classList.contains('open'));
+    }
+
+    // ====== CHECKOUT (local simulated) ======
+    function beginCheckout(){
+      toggleCart();
+      openCheckoutForm();
+    }
+
+    function openCheckoutForm(){
+      const modal = document.getElementById('productModal');
+      const container = document.getElementById('modalContent');
+      container.innerHTML = `
+        <div style="grid-column:1/-1">
+          <h2>Checkout</h2>
+          <div style="color:var(--muted)">Fill shipping & payment info. This is a simulated checkout (no real payments).</div>
+        </div>
+        <div style="grid-column:1/-1;margin-top:8px">
+          <form id="checkoutForm" onsubmit="submitOrder(event)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <input id="c_name" placeholder="Full name" required />
+              <input id="c_email" placeholder="Email" type="email" required />
+              <input id="c_address" placeholder="Shipping address" required style="grid-column:1/-1" />
+              <input id="c_city" placeholder="City" required />
+              <input id="c_post" placeholder="Postal code" required />
+            </div>
+            <div style="margin-top:8px">
+              <label style="display:block;color:var(--muted);margin-bottom:6px">Payment method (simulated)</label>
+              <select id="c_payment"><option>Card</option><option>Cash on delivery</option></select>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px"><button class="btn buy" type="submit">Place order</button><button class="btn add" type="button" onclick="closeModal()">Cancel</button></div>
+          </form>
+        </div>
+      `;
+      modal.classList.add('open'); modal.style.visibility='visible'; modal.style.opacity='1'; modal.setAttribute('aria-hidden','false');
+    }
+
+    async function submitOrder(e){
+      e.preventDefault();
+      const cart = getCart();
+      if(cart.length===0){ alert('Your cart is empty'); return; }
+      const name = document.getElementById('c_name').value;
+      const email = document.getElementById('c_email').value;
+      const address = document.getElementById('c_address').value;
+      const city = document.getElementById('c_city').value;
+      const post = document.getElementById('c_post').value;
+      const payment = document.getElementById('c_payment').value;
+
+      const order = {
+        id: 'ord_' + Date.now(),
+        createdAt: new Date().toISOString(),
+        customer: {name,email,address,city,post,payment},
+        items: cart.map(ci=>({id:ci.id,qty:ci.qty})),
+        status: 'pending'
+      };
+
+      // Save order locally
+      const orders = JSON.parse(localStorage.getItem('aurora_orders_v1')||'[]');
+      orders.push(order); localStorage.setItem('aurora_orders_v1', JSON.stringify(orders));
+
+      // If Firestore present, try saving order to `orders` collection (best-effort)
+      if(typeof db !== 'undefined'){
+        try{
+          await db.collection('orders').add(order);
+          console.log('Order saved to Firestore');
+        }catch(err){ console.warn('Failed to send order to Firestore', err); }
+      }
+
+      saveCart([]);
+      closeModal();
+      alert('Thanks ' + name + '! Your order ' + order.id + ' has been placed (simulated).');
+    }
+
+    function closeModal(){
+      const modal = document.getElementById('productModal');
+      modal.classList.remove('open'); modal.style.visibility='hidden'; modal.style.opacity='0'; modal.setAttribute('aria-hidden','true');
+    }
+
+    // ====== PRODUCT UI ======
+    const grid = document.getElementById('productGrid');
+    function renderProducts(list){
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <h3>${p.title}</h3>
+          <div style="color:var(--muted);font-size:13px">${p.note}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><div class="price">$${p.price.toFixed(2)}</div><div class="tag">${p.tag}</div></div>
+          <div class="actions">
+            <button class="btn add" onclick="openModal(${p.id})">View</button>
+            <button class="btn buy" onclick="addToCart(${p.id})">Add to cart</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      })
+      updateCartUI();
+    }
+
+    function openModal(id){
+      const p = products.find(x=>Number(x.id)===Number(id) || String(x.id)===String(id));
+      if(!p) return;
+      const modal = document.getElementById('productModal');
+      const container = document.getElementById('modalContent');
+      container.innerHTML = `
+        <div style="background:#0b0f13;border-radius:8px;padding:6px"><img src='${p.img}' style='width:100%;height:220px;object-fit:cover;border-radius:8px' /></div>
+        <div>
+          <h2 style="margin-top:0">${p.title}</h2>
+          <div style="color:var(--muted)">${p.note}</div>
+          <p style="margin-top:12px;color:var(--muted)">${p.desc}</p>
+          <div style="font-weight:700;margin-top:10px">$${p.price.toFixed(2)}</div>
+          <div style="margin-top:12px;display:flex;gap:8px"><button class="btn buy" onclick="addToCart('${p.id}',1);closeModal()">Add to cart</button><button class="btn add" onclick="closeModal()">Close</button></div>
+        </div>
+      `;
+      modal.classList.add('open'); modal.style.visibility='visible'; modal.style.opacity='1'; modal.setAttribute('aria-hidden','false');
+    }
+
+    function filterProducts(){
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtered = products.filter(p => p.title.toLowerCase().includes(q) || p.note.toLowerCase().includes(q));
+      renderProducts(filtered);
+    }
+
+    function applyFilter(tag){
+      const filtered = products.filter(p=>p.tag.toLowerCase()===tag.toLowerCase());
+      renderProducts(filtered);
+    }
+
+    function subscribe(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      alert('Thanks — ' + email + ' has been subscribed to our newsletter!');
+      document.getElementById('email').value = '';
+    }
+
+    // initial load
+    (async function(){ await loadProducts(); updateCartUI(); })();
+
+    // close modal when clicking outside
+    document.getElementById('productModal').addEventListener('click', (ev)=>{ if(ev.target.id==='productModal') closeModal(); });
+
+  </script>
+  
+  <!-- HELP:
+    To enable Firebase/Firestore:
+      1) Add firebase scripts to <head> (uncomment the lines in JS above):
+         <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+      2) Paste your Firebase config into the firebaseConfig object and uncomment initialization.
+      3) Create a `products` collection in Firestore (documents with fields: title, note, price (number), tag, img, desc).
+
+    Notes:
+      - Orders are saved locally in localStorage under key 'aurora_orders_v1'. If Firestore is configured, orders will also be sent to 'orders' collection (best-effort).
+      - This checkout is simulated for demo purposes and does NOT process real payments. Integrate Stripe/PayPal server-side when ready.
+  -->
+
+</body>
+</html>
